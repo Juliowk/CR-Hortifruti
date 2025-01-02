@@ -1,17 +1,24 @@
 import { Router } from "express";
-import { MongoConnect } from "../database/Mongo";
+
+import { GetProductsrepository } from "../repositorys/Products/Get/getProducts";
+import { GetProductsController } from "../controllers/Products/Get/getProducts";
+import { CreateProductRepository } from "../repositorys/Products/Post/createProduct";
+import { CreateProductController } from "../controllers/Products/Post/createProduct";
 
 const routerProducts = Router();
 
 routerProducts.get("/", async (req, res) => {
-  const all = await MongoConnect.db.collection("products").find().toArray();
-  res.status(200).json(all);
+  const repository = new GetProductsrepository();
+  const controller = new GetProductsController(repository);
+  const { statusCode, body } = await controller.handle();
+  res.status(statusCode).json(body);
 });
 
 routerProducts.post("/", async (req, res) => {
-  await MongoConnect.db.collection("products").insertOne({ name: "Júlio" });
-  const all = await MongoConnect.db.collection("products").find().toArray();
-  res.status(200).json(all);
+  const repository = new CreateProductRepository();
+  const controller = new CreateProductController(repository);
+  const { statusCode, body } = await controller.handle(req);
+  res.status(statusCode).json(body);
 });
 
 export default routerProducts;
