@@ -16,6 +16,6 @@ export interface HttpResponse<T> {
 
 export interface HttpRequest<T> {
   body?: T;
-  paramas?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  params?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   headers?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
