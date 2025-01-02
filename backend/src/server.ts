@@ -2,18 +2,23 @@ import express from "express";
 import dotenv from "dotenv";
 
 import { MongoConnect } from "./database/Mongo";
+import routerProducts from "./routes/products";
 
-await MongoConnect.connect();
+const main = async () => {
+  dotenv.config();
 
-dotenv.config();
+  const PORT = process.env.PORT || "4000";
 
-const app = express();
-app.use(express.json());
+  await MongoConnect.connect();
 
-app.get("/", async (req, res) => {
-  res.status(200).json("Hello World");
-});
+  const app = express();
+  app.use(express.json());
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
-});
+  app.use("/products", routerProducts)
+
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+};
+
+main();
