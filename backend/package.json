@@ -24,7 +24,7 @@
   },
   "contributors": [],
   "scripts": {
-    "dev": "tsx src/server.ts",
+    "dev": "tsx --watch src/server.ts",
     "test": ""
   },
   "devDependencies": {
@@ -40,6 +40,8 @@
     "typescript-eslint": "^8.19.0"
   },
   "dependencies": {
-    "express": "^4.21.2"
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongodb": "^6.12.0"
   }
 }
