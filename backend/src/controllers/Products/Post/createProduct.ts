@@ -1,11 +1,11 @@
-import Product from "../../../models/Product";
+import Product from "../../../models/Product.js";
 import {
   HttpRequest,
   HttpResponse,
   HttpStatusCode,
   IController,
-} from "../../protocols";
-import { IcreateRepository, IParams } from "./protocols";
+} from "../../protocols.js";
+import { IcreateRepository, IParams } from "./protocols.js";
 
 export class CreateProductController implements IController {
   constructor(private readonly repository: IcreateRepository) {}

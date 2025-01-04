@@ -2,8 +2,8 @@ import { ObjectId } from "mongodb";
 import {
   IUpdateParams,
   IUpdateRepository,
-} from "../../../controllers/Products/Update/protocols";
-import { MongoConnect } from "../../../database/Mongo";
+} from "../../../controllers/Products/Update/protocols.js";
+import { MongoConnect } from "../../../database/Mongo.js";
 
 export class UpdateRepository implements IUpdateRepository {
   async update(id: string, params: IUpdateParams): Promise<void> {
@@ -16,7 +16,7 @@ export class UpdateRepository implements IUpdateRepository {
         throw new Error("No document was updated.");
       
     } catch (error) {
-      throw new  Error(`Database update failed: ${error.message}`);
+      throw new  Error(`Database update failed: ${error}`);
     }
   }
 }

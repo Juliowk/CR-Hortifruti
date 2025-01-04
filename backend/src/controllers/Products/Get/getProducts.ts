@@ -1,5 +1,5 @@
-import { HttpResponse, HttpStatusCode, IController } from "../../protocols";
-import { IGetProductsRepository } from "./protocols";
+import { HttpResponse, HttpStatusCode, IController } from "../../protocols.js";
+import { IGetProductsRepository } from "./protocols.js";
 
 export class GetProductsController implements IController {
   constructor(private readonly repository: IGetProductsRepository) {}

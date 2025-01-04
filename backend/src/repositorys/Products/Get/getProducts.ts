@@ -1,6 +1,6 @@
-import { IGetProductsRepository } from "../../../controllers/Products/Get/protocols";
-import { MongoConnect } from "../../../database/Mongo";
-import Product from "../../../models/Product";
+import { IGetProductsRepository } from "../../../controllers/Products/Get/protocols.js";
+import { MongoConnect } from "../../../database/Mongo.js";
+import Product from "../../../models/Product.js";
 
 export class GetProductsrepository implements IGetProductsRepository {
   async getProducts(): Promise<Product[]> {

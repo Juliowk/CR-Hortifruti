@@ -1,5 +1,5 @@
-import { HttpRequest, HttpResponse, IController } from "../../protocols";
-import { IUpdateParams, IUpdateRepository } from "./protocols";
+import { HttpRequest, HttpResponse, IController } from "../../protocols.js";
+import { IUpdateParams, IUpdateRepository } from "./protocols.js";
 
 export class UpdateController implements IController {
   constructor(private readonly repository: IUpdateRepository) {}
@@ -43,7 +43,7 @@ export class UpdateController implements IController {
     } catch (error) {
       return {
         statusCode: 500,
-        body: `Error: ${error.message}`,
+        body: `Error: ${error}`,
       };
     }
   }

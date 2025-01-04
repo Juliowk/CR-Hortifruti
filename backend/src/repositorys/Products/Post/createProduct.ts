@@ -1,9 +1,9 @@
 import {
   IcreateRepository,
   IParams,
-} from "../../../controllers/Products/Post/protocols";
-import { MongoConnect } from "../../../database/Mongo";
-import Product from "../../../models/Product";
+} from "../../../controllers/Products/Post/protocols.js";
+import { MongoConnect } from "../../../database/Mongo.js";
+import Product from "../../../models/Product.js";
 
 export class CreateProductRepository implements IcreateRepository {
   async create(params: IParams): Promise<Product> {

@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
-import { IDeleteRespository } from "../../../controllers/Products/Delete/protocols";
-import { MongoConnect } from "../../../database/Mongo";
+import { IDeleteRespository } from "../../../controllers/Products/Delete/protocols.js";
+import { MongoConnect } from "../../../database/Mongo.js";
 
 export class DeleteProductRepository implements IDeleteRespository {
   async delete(id: string): Promise<void> {

@@ -3,8 +3,8 @@ import {
   HttpResponse,
   HttpStatusCode,
   IController,
-} from "../../protocols";
-import { IDeleteRespository } from "./protocols";
+} from "../../protocols.js";
+import { IDeleteRespository } from "./protocols.js";
 
 export class DeleteProductController implements IController {
   constructor(private readonly repository: IDeleteRespository) {}

@@ -1,8 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 
-import { MongoConnect } from "./database/Mongo";
-import routerProducts from "./routes/products";
+import { MongoConnect } from "./database/Mongo.js";
+import routerProducts from "./routes/products.js";
 
 const main = async () => {
   dotenv.config();

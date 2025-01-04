@@ -1,15 +1,16 @@
 import { Router } from "express";
 
-import { GetProductsrepository } from "../repositorys/Products/Get/getProducts";
-import { GetProductsController } from "../controllers/Products/Get/getProducts";
+import { GetProductsrepository } from "../repositorys/Products/Get/getProducts.js";
+import { GetProductsController } from "../controllers/Products/Get/getProducts.js";
 
-import { CreateProductRepository } from "../repositorys/Products/Post/createProduct";
-import { CreateProductController } from "../controllers/Products/Post/createProduct";
+import { CreateProductRepository } from "../repositorys/Products/Post/createProduct.js";
+import { CreateProductController } from "../controllers/Products/Post/createProduct.js";
 
-import { DeleteProductRepository } from "../repositorys/Products/Delete/deleteProduct";
-import { DeleteProductController } from "../controllers/Products/Delete/deleteProducts";
-import { UpdateRepository } from "../repositorys/Products/Update/updateProduct";
-import { UpdateController } from "../controllers/Products/Update/updateProduct";
+import { DeleteProductRepository } from "../repositorys/Products/Delete/deleteProduct.js";
+import { DeleteProductController } from "../controllers/Products/Delete/deleteProducts.js";
+
+import { UpdateRepository } from "../repositorys/Products/Update/updateProduct.js";
+import { UpdateController } from "../controllers/Products/Update/updateProduct.js";
 
 const routerProducts = Router();
 
