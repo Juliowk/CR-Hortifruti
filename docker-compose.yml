@@ -1,0 +1,45 @@
+services:
+  database:
+    container_name: db-mongo
+
+    image: mongo:latest
+
+    ports:
+      - "27017:27017"
+
+    networks:
+      - cr-network
+
+    volumes:
+      - mongo-data:/data/cr-db
+    
+    restart: always
+  
+  backend:
+    container_name: cr-backend
+
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+
+    ports:
+      - "4000:4000"
+
+    restart: always
+
+    networks:
+      - cr-network
+
+    environment:
+      - PORT=4000
+      - DB_URL_MONGO=mongodb://db-mongo:27017/products/
+
+    depends_on:
+      - database
+
+networks:
+  cr-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
