@@ -47,8 +47,8 @@ services:
       context: frontend
       dockerfile: Dockerfile
 
-    ports:
-      - "4001:4001"
+    environment:
+      - .env
 
     networks:
       - cr-network

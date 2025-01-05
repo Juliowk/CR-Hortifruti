@@ -7,7 +7,8 @@ function App() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:4000/products")
+    fetch(
+      import.meta.env.VITE_URL_GET_PRODUCTS_DEV || import.meta.env.VITE_URL_GET_PRODUCTS_PROD)
       .then((result) => {
         if (!result.ok) throw new Error("Request error");
         return result.json();
@@ -20,7 +21,7 @@ function App() {
       });
   }, []);
 
-  console.log(products);  
+  console.log(products);
 
   return (
     <>
