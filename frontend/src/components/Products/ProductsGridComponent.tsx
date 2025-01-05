@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 
 function Products_Grid_Component() {
   return (
-    <Container className="mt-4">
+    <Container className="mt-5 mb-5">
       <Row xs={1} md={4} className="g-4">
         {Array.from({ length: 4 }).map((_, idx) => (
           <Col key={idx}>

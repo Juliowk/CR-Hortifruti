@@ -8,8 +8,28 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 
 import logo from "../../images/3-removebg-preview.png";
 import styles from "./navbar.module.css";
+import { useEffect, useState } from "react";
 
 function Navbar_Component() {
+  const [isCollapse, setIsCollapse] = useState(false);
+
+  const handleResize = () => {
+    if (window.innerWidth <= 576) {
+      setIsCollapse(true);
+    } else {
+      setIsCollapse(false);
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <Navbar key={"sm"} expand={"sm"} className="bg-body-tertiary">
       <Container>
@@ -40,6 +60,22 @@ function Navbar_Component() {
             </Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
+            <Form
+              className={`d-flex ${isCollapse ? null : "w-100"}`}
+              style={{
+                marginLeft: !isCollapse ? "2rem" : undefined,
+                marginRight: !isCollapse ? "2rem" : undefined,
+              }}
+            >
+              <Form.Control
+                type="search"
+                placeholder="Search"
+                className="me-2"
+                aria-label="Search"
+              />
+              <Button variant="outline-secondary">Search</Button>
+            </Form>
+
             <Nav className="justify-content-end flex-grow-1 pe-3">
               <Nav.Link href="#">Home</Nav.Link>
               <Nav.Link href="#">Link</Nav.Link>
@@ -55,15 +91,6 @@ function Navbar_Component() {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
-              <Button variant="outline-secondary">Search</Button>
-            </Form>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
       </Container>
