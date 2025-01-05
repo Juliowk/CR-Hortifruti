@@ -1,9 +1,7 @@
+import Navbar_Component from "./components/Navbar/navbar";
+
 function App() {
-  return (
-    <div>
-      <h1>Hello World</h1>
-    </div>
-  );
+  return <Navbar_Component />;
 }
 
 export default App;
