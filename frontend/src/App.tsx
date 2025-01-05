@@ -21,13 +21,11 @@ function App() {
       });
   }, []);
 
-  console.log(products);
-
   return (
     <>
       <Navbar_Component />
       <Carousel_Component />
-      <Products_Grid_Component />
+      <Products_Grid_Component products={products}/>
     </>
   );
 }
