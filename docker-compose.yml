@@ -12,13 +12,13 @@ services:
 
     volumes:
       - mongo-data:/data/cr-db
-    
+
     restart: always
-  
+
   backend:
     container_name: cr-backend
 
-    build: 
+    build:
       context: ./backend
       dockerfile: Dockerfile
 
@@ -37,9 +37,50 @@ services:
     depends_on:
       - database
 
+  frontend:
+    container_name: cr-frontend
+
+    volumes:
+      - cr-frontend-volume:/var/www/html
+
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+
+    ports:
+      - "4001:4001"
+
+    networks:
+      - cr-network
+
+    restart: always
+
+  nginx:
+    container_name: cr-nginx
+
+    volumes:
+      - cr-frontend-volume:/var/www/html
+
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+
+    ports:
+      - 80:80
+
+    networks:
+      - cr-network
+
+    restart: always
+
+    depends_on:
+      - backend
+      - database
+
 networks:
   cr-network:
     driver: bridge
 
 volumes:
   mongo-data:
+  cr-frontend-volume:
