@@ -1,11 +1,11 @@
-import CarouselComponent from "./components/Carrousel/CarouselComponent";
+import Carousel_Component from "./components/Carrousel/CarouselComponent";
 import Navbar_Component from "./components/Navbar/NavbarComponent";
 
 function App() {
   return (
     <>
       <Navbar_Component />
-      <CarouselComponent />
+      <Carousel_Component />
     </>
   );
 }

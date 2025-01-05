@@ -11,7 +11,7 @@ import styles from "./navbar.module.css";
 
 function Navbar_Component() {
   return (
-    <Navbar key={"sm"} expand={"sm"} className="bg-body-tertiary mb-3">
+    <Navbar key={"sm"} expand={"sm"} className="bg-body-tertiary">
       <Container>
         <Navbar.Brand href="#">
           <img
