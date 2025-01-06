@@ -20,6 +20,7 @@ export interface HttpRequest<T> {
   body?: T;
   params?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   headers?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  file?: Express.Multer.File;
 }
 
 export const bodySchema = z.object({
