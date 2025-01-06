@@ -1,4 +1,11 @@
-import { HttpRequest, HttpResponse, IController } from "../../protocols.js";
+import { z } from "zod";
+import {
+  bodySchema,
+  HttpRequest,
+  HttpResponse,
+  HttpStatusCode,
+  IController,
+} from "../../protocols.js";
 import { IUpdateParams, IUpdateRepository } from "./protocols.js";
 
 export class UpdateController implements IController {
@@ -27,13 +34,7 @@ export class UpdateController implements IController {
 
       const { name, price } = body;
 
-      if (!name && !price) {
-        return {
-          statusCode: 400,
-          body: "Params not provided",
-        };
-      }
-      
+      bodySchema.parse(body);
 
       await this.repository.update(id, { name, price });
 
@@ -41,10 +42,20 @@ export class UpdateController implements IController {
         statusCode: 200,
         body: "Updated successfully",
       };
-      
     } catch (error) {
+      if (error instanceof z.ZodError) {
+        const errorMessages = error.errors
+          .map((e) => `${e.message}`)
+          .join(" | ");
+
+        return {
+          statusCode: HttpStatusCode.BAD_REQUEST,
+          body: `${errorMessages}`,
+        };
+      }
+      
       return {
-        statusCode: 500,
+        statusCode: HttpStatusCode.SERVER_ERROR,
         body: `Error: ${error}`,
       };
     }
