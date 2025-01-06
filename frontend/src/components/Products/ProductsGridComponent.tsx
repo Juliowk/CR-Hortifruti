@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 interface IProducts {
   _id: string;
   name: string;
+  price: number;
 }
 
 interface IArrayProducts {
@@ -26,7 +27,7 @@ function Products_Grid_Component({ products }: IArrayProducts) {
               <Card.Body>
                 <Card.Title>{product.name}</Card.Title>
               </Card.Body>
-              <Card.Footer>Preço da semana: $00,00</Card.Footer>
+              <Card.Footer>Preço da semana: ${product.price}</Card.Footer>
             </Card>
           </Col>
         ))}
