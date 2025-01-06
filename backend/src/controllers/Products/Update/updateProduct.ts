@@ -25,21 +25,23 @@ export class UpdateController implements IController {
         };
       }
 
-      const { name } = body;
+      const { name, price } = body;
 
-      if (!name) {
+      if (!name && !price) {
         return {
           statusCode: 400,
-          body: "Name not provided",
+          body: "Params not provided",
         };
       }
+      
 
-      await this.repository.update(id, { name });
+      await this.repository.update(id, { name, price });
 
       return {
         statusCode: 200,
         body: "Updated successfully",
       };
+      
     } catch (error) {
       return {
         statusCode: 500,

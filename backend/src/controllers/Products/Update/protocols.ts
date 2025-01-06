@@ -1,5 +1,6 @@
 export interface IUpdateParams {
   name?: string;
+  price?: number;
 }
 
 export interface IUpdateRepository {
