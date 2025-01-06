@@ -15,31 +15,28 @@ export class UpdateController implements IController {
     httpRequest: HttpRequest<IUpdateParams>
   ): Promise<HttpResponse<string>> {
     try {
-      const id = httpRequest?.params?.id;
-      const body = httpRequest?.body;
-
-      if (!id) {
+      if (!httpRequest.params.id) {
         return {
-          statusCode: 400,
+          statusCode: HttpStatusCode.BAD_REQUEST,
           body: "Id not provided",
         };
       }
 
-      if (!body) {
+      if (!httpRequest.body) {
         return {
-          statusCode: 400,
+          statusCode: HttpStatusCode.BAD_REQUEST,
           body: "Body not provided",
         };
       }
 
-      const { name, price } = body;
+      const { name, price } = httpRequest.body;
 
-      bodySchema.parse(body);
+      bodySchema.parse(httpRequest.body);
 
-      await this.repository.update(id, { name, price });
+      await this.repository.update(httpRequest.params.id, { name, price });
 
       return {
-        statusCode: 200,
+        statusCode: HttpStatusCode.OK,
         body: "Updated successfully",
       };
     } catch (error) {
@@ -53,7 +50,7 @@ export class UpdateController implements IController {
           body: `${errorMessages}`,
         };
       }
-      
+
       return {
         statusCode: HttpStatusCode.SERVER_ERROR,
         body: `Error: ${error}`,
