@@ -1,7 +1,4 @@
-export interface IImage {
-  filename: string;
-  path: string;
-}
+import { IImage } from "../../protocols.js";
 
 export interface ISaveImageRepository {
   saveImage(imageData: IImage): Promise<void>;

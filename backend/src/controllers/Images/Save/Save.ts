@@ -3,8 +3,9 @@ import {
   HttpResponse,
   HttpStatusCode,
   IController,
+  IImage,
 } from "../../protocols.js";
-import { IImage, ISaveImageRepository } from "./protocols.js";
+import { ISaveImageRepository } from "./protocols.js";
 
 export class SaveImageController implements IController {
   constructor(private readonly repository: ISaveImageRepository) {}
@@ -27,13 +28,13 @@ export class SaveImageController implements IController {
           body: `Request error`,
         };
       }
+
       await this.repository.saveImage({ filename, path });
 
       return {
         statusCode: HttpStatusCode.OK,
         body: "Image saved successfully!",
       };
-
     } catch (error) {
       return {
         statusCode: HttpStatusCode.SERVER_ERROR,
