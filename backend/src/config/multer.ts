@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Caminho para a pasta "uploads"
-const uploadsPath = path.resolve(__dirname, "../uploads");
+const uploadsPath = path.resolve(__dirname, "../../../frontend/src/uploads");
 
 // Verifica se a pasta existe, se não, cria
 if (!fs.existsSync(uploadsPath)) {
