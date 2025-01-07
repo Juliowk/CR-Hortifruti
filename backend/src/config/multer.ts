@@ -6,20 +6,18 @@ import fs from "fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Caminho para a pasta "uploads"
 const uploadsPath = path.resolve(__dirname, "../../../frontend/src/uploads");
 
-// Verifica se a pasta existe, se não, cria
 if (!fs.existsSync(uploadsPath)) {
-  fs.mkdirSync(uploadsPath, { recursive: true }); // Cria a pasta, incluindo subpastas se necessário
+  fs.mkdirSync(uploadsPath, { recursive: true }); 
 }
 
 const storage: StorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, uploadsPath); // Usa o caminho da pasta já verificado/criado
+    cb(null, uploadsPath); 
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Adiciona timestamp ao nome do arquivo
+    cb(null, Date.now() + path.extname(file.originalname));
   },
 });
 
