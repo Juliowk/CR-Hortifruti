@@ -72,8 +72,14 @@ const Products_Grid_Component = ({ products }: IArrayProducts) => {
               />
               <Card.Body>
                 <Card.Title>{product.name}</Card.Title>
+                <Button
+                  style={{ cursor: "default" }}
+                   variant="success"
+                  className="w-100"
+                >
+                  Preço da semana: ${product.price}
+                </Button>
               </Card.Body>
-              <Card.Footer>Preço da semana: ${product.price}</Card.Footer>
             </Card>
           </Col>
         ))}
@@ -94,7 +100,6 @@ const Products_Grid_Component = ({ products }: IArrayProducts) => {
       <Modal
         show={modal}
         onHide={modalOpenClose}
-        animation={false}
         centered
         size="lg"
       >
