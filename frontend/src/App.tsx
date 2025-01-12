@@ -25,7 +25,7 @@ function App() {
     <>
       <Navbar_Component />
       <Carousel_Component />
-      <Products_Grid_Component products={products}/>
+      <Products_Grid_Component products={[...products].reverse()} />
     </>
   );
 }
