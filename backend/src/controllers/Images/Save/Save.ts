@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import {
   HttpRequest,
   HttpResponse,
@@ -11,7 +12,7 @@ export class SaveImageController implements IController {
   constructor(private readonly repository: ISaveImageRepository) {}
   async handle(
     httpRequest: HttpRequest<IImage>
-  ): Promise<HttpResponse<string>> {
+  ): Promise<HttpResponse<string | ObjectId>> {
     try {
       if (!httpRequest.file) {
         return {
@@ -29,11 +30,11 @@ export class SaveImageController implements IController {
         };
       }
 
-      await this.repository.saveImage({ filename, path });
+      const fileName = await this.repository.saveImage({ filename, path });
 
       return {
         statusCode: HttpStatusCode.OK,
-        body: "Image saved successfully!",
+        body: fileName,
       };
     } catch (error) {
       return {

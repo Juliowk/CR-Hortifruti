@@ -29,7 +29,7 @@ export class CreateProductController implements IController {
         const errorMessages = error.errors
           .map((e) => `${e.message}`)
           .join(" | ");
-          
+
         return {
           statusCode: HttpStatusCode.BAD_REQUEST,
           body: errorMessages,

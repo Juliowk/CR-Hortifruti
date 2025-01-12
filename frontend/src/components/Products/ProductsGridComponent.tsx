@@ -21,6 +21,7 @@ const Products_Grid_Component = ({ products }: IArrayProducts) => {
   const [data, setData] = useState({
     name: "",
     price: 0,
+    file: null as File | null,
   });
 
   const modalOpenClose = () => {
@@ -28,10 +29,16 @@ const Products_Grid_Component = ({ products }: IArrayProducts) => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
+    const { id, value, files } = e.target;
+
     setData((prev) => ({
       ...prev,
-      [id]: id === "price" ? parseFloat(value) : value,
+      [id === "file" ? "file" : id]:
+        id === "price"
+          ? parseFloat(value)
+          : id === "file"
+          ? files && files[0]
+          : value,
     }));
   };
 
@@ -39,19 +46,42 @@ const Products_Grid_Component = ({ products }: IArrayProducts) => {
     e.preventDefault();
 
     try {
-      const url =
+      const urlUploads =
+        import.meta.env.VITE_URL_GET_UPLOADS_DEV ||
+        import.meta.env.VITE_URL_GET_UPLOADS_PROD;
+
+      const urlProducts =
         import.meta.env.VITE_URL_GET_PRODUCTS_DEV ||
         import.meta.env.VITE_URL_GET_PRODUCTS_PROD;
 
-      const response = await fetch(url, {
+      const formData = new FormData();
+
+      if (!data.file) throw new Error("Arquivo não informado");
+
+      formData.append("file", data.file);
+
+      const responseImg = await fetch(urlUploads, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!responseImg.ok) throw new Error("Erro ao salvar imagem");
+
+      const awaitFileName = await responseImg.json();
+
+      const responseProducts = await fetch(urlProducts, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          name: data.name,
+          price: data.price,
+          fileName: awaitFileName,
+        }),
       });
 
-      if (!response.ok) throw new Error("Erro ao salvar o produto");
+      if (!responseProducts.ok) throw new Error("Erro ao salvar o produto");
 
       window.location.reload();
     } catch (error) {
@@ -74,7 +104,7 @@ const Products_Grid_Component = ({ products }: IArrayProducts) => {
                 <Card.Title>{product.name}</Card.Title>
                 <Button
                   style={{ cursor: "default" }}
-                   variant="success"
+                  variant="success"
                   className="w-100"
                 >
                   Preço da semana: ${product.price}
@@ -84,25 +114,14 @@ const Products_Grid_Component = ({ products }: IArrayProducts) => {
           </Col>
         ))}
         <Col onClick={modalOpenClose}>
-          <Card>
-            <Card.Img
-              variant="top"
-              src="https://via.placeholder.com/150x204/808080/808080.png"
-            />
-            <Card.ImgOverlay className="d-flex justify-content-center align-items-center">
-              <Card.Text>
-                <FaCirclePlus size={100} color="white" />
-              </Card.Text>
-            </Card.ImgOverlay>
+          <Card className="d-flex justify-content-center align-items-center h-100 p-5">
+            <Card.Text>
+              <FaCirclePlus size={100} color="grey" />
+            </Card.Text>
           </Card>
         </Col>
       </Row>
-      <Modal
-        show={modal}
-        onHide={modalOpenClose}
-        centered
-        size="lg"
-      >
+      <Modal show={modal} onHide={modalOpenClose} centered size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Adicionar Produto:</Modal.Title>
         </Modal.Header>
@@ -129,6 +148,17 @@ const Products_Grid_Component = ({ products }: IArrayProducts) => {
                   step="0.01"
                   type="number"
                   value={data.price}
+                  onChange={handleChange}
+                />
+              </Col>
+            </Row>
+            <Row className="mt-4">
+              <Col>
+                <Form.Label>Imagem do produto:</Form.Label>
+                <Form.Control
+                  id="file"
+                  placeholder="Escolha uma imagem"
+                  type="file"
                   onChange={handleChange}
                 />
               </Col>
