@@ -22,18 +22,21 @@ const ModalBodyForm = () => {
     }));
   };
 
+  const urlUploads =
+    import.meta.env.VITE_URL_GET_UPLOADS_DEV ||
+    import.meta.env.VITE_URL_GET_UPLOADS_PROD;
+
+  const urlProducts =
+    import.meta.env.VITE_URL_GET_PRODUCTS_DEV ||
+    import.meta.env.VITE_URL_GET_PRODUCTS_PROD;
+
+  console.log(urlUploads);
+  console.log(urlProducts);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      const urlUploads =
-        import.meta.env.VITE_URL_GET_UPLOADS_DEV ||
-        import.meta.env.VITE_URL_GET_UPLOADS_PROD;
-
-      const urlProducts =
-        import.meta.env.VITE_URL_GET_PRODUCTS_DEV ||
-        import.meta.env.VITE_URL_GET_PRODUCTS_PROD;
-
       const formData = new FormData();
 
       if (!data.file) throw new Error("Arquivo não informado");
