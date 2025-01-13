@@ -2,6 +2,16 @@ import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
 const ModalBodyForm = () => {
+  const urlUploads =
+    import.meta.env.VITE_URL_GET_UPLOADS_DEV ||
+    import.meta.env.VITE_URL_GET_UPLOADS_PROD;
+
+  const urlProducts =
+    import.meta.env.VITE_URL_GET_PRODUCTS_DEV ||
+    import.meta.env.VITE_URL_GET_PRODUCTS_PROD;
+
+  if (!urlProducts || !urlUploads) throw new Error("Unreported variables");
+
   const [data, setData] = useState({
     name: "",
     price: 0,
@@ -21,17 +31,6 @@ const ModalBodyForm = () => {
           : value,
     }));
   };
-
-  const urlUploads =
-    import.meta.env.VITE_URL_GET_UPLOADS_DEV ||
-    import.meta.env.VITE_URL_GET_UPLOADS_PROD;
-
-  const urlProducts =
-    import.meta.env.VITE_URL_GET_PRODUCTS_DEV ||
-    import.meta.env.VITE_URL_GET_PRODUCTS_PROD;
-
-  console.log(urlUploads);
-  console.log(urlProducts);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -68,7 +67,7 @@ const ModalBodyForm = () => {
 
       window.location.reload();
     } catch (error) {
-      console.log(`Erro ao salvar o produto: ${error}`);
+      console.log(error);
       alert("Erro ao salvar o produto");
     }
   };
