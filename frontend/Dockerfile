@@ -1,21 +1,18 @@
 FROM node:20.18.1
 
-WORKDIR /tmp/react
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+
+RUN npm install
 
 COPY . .
-
-RUN rm -rf node_modules
-
-RUN npm i
 
 RUN npm run build
 
 RUN mkdir -p /var/www/html
-
 RUN mv dist/* /var/www/html
 
 VOLUME /var/www/html
 
-WORKDIR /
-
-RUN rm -rf /tmp/react
+RUN rm -rf /app
