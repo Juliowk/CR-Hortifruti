@@ -19,7 +19,7 @@ const Products_Grid_Component = ({ products }: IArrayProducts) => {
     <Container className="mt-5 mb-5">
       <Row xs={1} md={4} className="g-4">
         {products.map((product) => (
-          <SingleProduct product={product} />
+          <SingleProduct key={product._id} product={product} />
         ))}
         <Col onClick={modalOpenClose}>
           <Card className="d-flex justify-content-center align-items-center h-100 p-5">
