@@ -5,7 +5,10 @@ const SingleProduct = ({ product }: SingleProductProps) => {
   return (
     <Col>
       <Card>
-        <Card.Img variant="top" src={`/uploads/${product.fileName}`} />
+        <Card.Img
+          variant="top"
+          src={`/cards/${product.image}`}
+        />
         <Card.Body>
           <Card.Title>{product.name}</Card.Title>
           <Button

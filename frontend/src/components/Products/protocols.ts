@@ -2,7 +2,7 @@ export interface IProducts {
   _id: string;
   name: string;
   price: number;
-  fileName: string;
+  image: string;
 }
 
 export interface IArrayProducts {

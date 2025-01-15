@@ -25,5 +25,6 @@ export interface HttpRequest<T> {
 
 export const bodySchema = z.object({
   name: z.string().min(3, "O nome do produto deve ter no minimo 3 caracteres!"),
-  price: z.number().min(0.1, "O preço deve ser maior que zero"),
+  price: z.number().min(0.1, "O preço deve ser maior que zero."),
+  image: z.string().nonempty("Escolha uma imagem."),
 });

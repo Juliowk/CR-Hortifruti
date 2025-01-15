@@ -2,33 +2,24 @@ import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
 const ModalBodyForm = () => {
-  const urlUploads =
-    import.meta.env.VITE_URL_GET_UPLOADS_DEV ||
-    import.meta.env.VITE_URL_GET_UPLOADS_PROD;
-
   const urlProducts =
     import.meta.env.VITE_URL_GET_PRODUCTS_DEV ||
     import.meta.env.VITE_URL_GET_PRODUCTS_PROD;
 
-  if (!urlProducts || !urlUploads) throw new Error("Unreported variables");
+  if (!urlProducts) throw new Error("Unreported variables");
 
   const [data, setData] = useState({
     name: "",
     price: 0,
-    file: null as File | null,
+    image: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value, files } = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLElement>) => {
+    const { id, value } = e.target as HTMLInputElement | HTMLSelectElement;
 
     setData((prev) => ({
       ...prev,
-      [id === "file" ? "file" : id]:
-        id === "price"
-          ? parseFloat(value)
-          : id === "file"
-          ? files && files[0]
-          : value,
+      [id]: id === "price" ? parseFloat(value) : value,
     }));
   };
 
@@ -36,21 +27,6 @@ const ModalBodyForm = () => {
     e.preventDefault();
 
     try {
-      const formData = new FormData();
-
-      if (!data.file) throw new Error("Arquivo não informado");
-
-      formData.append("file", data.file);
-
-      const responseImg = await fetch(urlUploads, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!responseImg.ok) throw new Error("Erro ao salvar imagem");
-
-      const awaitFileName = await responseImg.json();
-
       const responseProducts = await fetch(urlProducts, {
         method: "POST",
         headers: {
@@ -59,7 +35,7 @@ const ModalBodyForm = () => {
         body: JSON.stringify({
           name: data.name,
           price: data.price,
-          fileName: awaitFileName,
+          image: data.image,
         }),
       });
 
@@ -98,16 +74,13 @@ const ModalBodyForm = () => {
             onChange={handleChange}
           />
         </Col>
-      </Row>
-      <Row className="mt-4">
         <Col>
-          <Form.Label>Imagem do produto:</Form.Label>
-          <Form.Control
-            id="file"
-            placeholder="Escolha uma imagem"
-            type="file"
-            onChange={handleChange}
-          />
+          <Form.Label htmlFor="imagemSelect">Imagem:</Form.Label>
+          <Form.Select id="image" value={data.image} onChange={handleChange}>
+            <option value="">Selecione uma imagem</option>
+            <option value="Batata-card.png">Batata</option>
+            <option value="Cenoura-card.png">Cenoura</option>
+          </Form.Select>
         </Col>
       </Row>
       <Row className="mt-4">
