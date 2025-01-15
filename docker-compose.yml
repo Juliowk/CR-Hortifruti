@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   database:
     container_name: db-mongo
@@ -27,22 +25,18 @@ services:
       - DB_URL_MONGO=mongodb://db-mongo:27017/products/
     depends_on:
       - database
-    volumes:
-      - uploads:/app/uploads # Corrigido o caminho do volume para "app/uploads"
 
   frontend:
     container_name: cr-frontend
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        - VITE_URL_GET_PRODUCTS_PROD
     ports:
       - "3000:3000"
     volumes:
       - cr-frontend-volume:/var/www/html
-      - uploads:/var/www/html/public/uploads # Volume compartilhado para o frontend acessar as imagens
-    environment:
-      - VITE_URL_GET_PRODUCTS_PROD=http://localhost:4000/products
-      - VITE_URL_GET_UPLOADS_PROD=http://localhost:4000/uploads # Apontando para a rota no backend
     networks:
       - cr-network
     restart: always
@@ -60,7 +54,6 @@ services:
       - cr-network
     volumes:
       - cr-frontend-volume:/var/www/html
-      - uploads:/var/www/html/public/uploads # Volume para nginx acessar as imagens
     restart: always
     depends_on:
       - frontend
@@ -72,4 +65,3 @@ networks:
 volumes:
   mongo-data:
   cr-frontend-volume:
-  uploads: # Volume compartilhado para uploads

@@ -8,7 +8,7 @@ function App() {
 
   useEffect(() => {
     fetch(
-      import.meta.env.VITE_URL_GET_PRODUCTS_DEV || import.meta.env.VITE_URL_GET_PRODUCTS_PROD)
+      import.meta.env.VITE_URL_GET_PRODUCTS_PROD)
       .then((result) => {
         if (!result.ok) throw new Error("Request error");
         return result.json();
