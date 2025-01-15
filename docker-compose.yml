@@ -1,82 +1,69 @@
+version: "3.8"
+
 services:
   database:
     container_name: db-mongo
-
     image: mongo:latest
-
     ports:
       - "27017:27017"
-
     networks:
       - cr-network
-
     volumes:
-      - mongo-data:/data/cr-db
-
+      - mongo-data:/data/db
     restart: always
 
   backend:
     container_name: cr-backend
-
     build:
       context: ./backend
       dockerfile: Dockerfile
-
     ports:
       - "4000:4000"
-
     restart: always
-
     networks:
       - cr-network
-
     environment:
       - PORT=4000
       - DB_URL_MONGO=mongodb://db-mongo:27017/products/
-
     depends_on:
       - database
+    volumes:
+      - uploads:/app/uploads # Corrigido o caminho do volume para "app/uploads"
 
   frontend:
     container_name: cr-frontend
-
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
     volumes:
       - cr-frontend-volume:/var/www/html
-
-    build:
-      context: frontend
-      dockerfile: Dockerfile
-
+      - uploads:/var/www/html/public/uploads # Volume compartilhado para o frontend acessar as imagens
     environment:
       - VITE_URL_GET_PRODUCTS_PROD=http://localhost:4000/products
-      - VITE_URL_GET_UPLOADS_PROD=http://localhost:4000/upload
-
+      - VITE_URL_GET_UPLOADS_PROD=http://localhost:4000/uploads # Apontando para a rota no backend
     networks:
       - cr-network
-
     restart: always
+    depends_on:
+      - backend
 
   nginx:
     container_name: cr-nginx
-
-    volumes:
-      - cr-frontend-volume:/var/www/html
-
     build:
       context: ./nginx
       dockerfile: Dockerfile
-
     ports:
-      - 80:80
-
+      - "80:80"
     networks:
       - cr-network
-
+    volumes:
+      - cr-frontend-volume:/var/www/html
+      - uploads:/var/www/html/public/uploads # Volume para nginx acessar as imagens
     restart: always
-
     depends_on:
-      - backend
-      - database
+      - frontend
 
 networks:
   cr-network:
@@ -85,3 +72,4 @@ networks:
 volumes:
   mongo-data:
   cr-frontend-volume:
+  uploads: # Volume compartilhado para uploads
