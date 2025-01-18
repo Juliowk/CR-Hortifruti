@@ -3,7 +3,9 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import { MongoConnect } from "./database/Mongo.js";
+
 import routerProducts from "./routes/products.js";
+import routerUser from "./routes/users.js";
 
 const main = async () => {
   dotenv.config();
@@ -17,6 +19,7 @@ const main = async () => {
   app.use(cors());
 
   app.use("/products", routerProducts);
+  app.use("/user", routerUser);
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

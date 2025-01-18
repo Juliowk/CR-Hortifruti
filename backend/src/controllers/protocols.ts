@@ -24,7 +24,28 @@ export interface HttpRequest<T> {
 }
 
 export const bodySchema = z.object({
-  name: z.string().min(3, "O nome do produto deve ter no minimo 3 caracteres!"),
+  name: z
+    .string()
+    .min(3, "O nome do produto deve ter no minimo 3 caracteres!")
+    .refine(
+      (value) => value.trim() !== "",
+      "O nome não pode estar vazio ou conter apenas espaços!"
+    ),
   price: z.number().min(0.1, "O preço deve ser maior que zero."),
   image: z.string().nonempty("Escolha uma imagem."),
+});
+
+export const bodySchemaUser = z.object({
+  name: z
+    .string()
+    .min(3, "O nome deve ter no mínimo 3 caracteres!")
+    .max(50, "O nome deve ter no máximo 50 caracteres!")
+    .refine(
+      (value) => value.trim() !== "",
+      "O nome não pode estar vazio ou conter apenas espaços!"
+    ),
+  password: z
+    .string()
+    .min(8, "A senha deve ter no mínimo 8 caracteres!")
+    .max(20, "A senha deve ter no máximo 20 caracteres!"),
 });
