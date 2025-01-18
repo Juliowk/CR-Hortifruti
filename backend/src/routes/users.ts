@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { CreateUserRepository } from "../repositorys/Users/Create.js";
+import { CreateUserRepository } from "../repositorys/Users/Create/Create.js";
 import { CreateUserController } from "../controllers/Users/create/createUser.js";
 
 const routerUser = Router();

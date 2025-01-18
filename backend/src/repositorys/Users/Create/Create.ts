@@ -4,9 +4,9 @@ import {
   ICreateUserRepository,
   IParamsCreateUser,
   UserReturn,
-} from "../../controllers/Users/create/protocol.js";
-import { MongoConnect } from "../../database/Mongo.js";
-import User from "../../models/User.js";
+} from "../../../controllers/Users/create/protocol.js";
+import { MongoConnect } from "../../../database/Mongo.js";
+import User from "../../../models/User.js";
 
 export class CreateUserRepository implements ICreateUserRepository {
   async createUser(params: IParamsCreateUser): Promise<UserReturn> {

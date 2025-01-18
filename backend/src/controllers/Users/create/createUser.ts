@@ -1,3 +1,4 @@
+import { MongoConnect } from "../../../database/Mongo.js";
 import {
   bodySchemaUser,
   HttpRequest,
@@ -27,6 +28,14 @@ export class CreateUserController implements IController {
       }
 
       bodySchemaUser.parse(httpRequest.body);
+      const userExist = await MongoConnect.db
+        .collection("users")
+        .findOne({ name: httpRequest.body.name });
+
+      if (userExist) return {
+        statusCode: HttpStatusCode.BAD_REQUEST,
+        body: "Username already exists",
+      };
 
       const user = await this.repository.createUser(httpRequest.body);
 
@@ -34,7 +43,6 @@ export class CreateUserController implements IController {
         statusCode: HttpStatusCode.CREATED,
         body: user,
       };
-      
     } catch (error) {
       return {
         statusCode: HttpStatusCode.SERVER_ERROR,
