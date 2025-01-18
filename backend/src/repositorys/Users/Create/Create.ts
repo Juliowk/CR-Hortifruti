@@ -10,7 +10,7 @@ import { UserReturn } from "../../../controllers/protocols.js";
 
 export class CreateUserRepository implements ICreateUserRepository {
   async createUser(params: IParamsCreateUser): Promise<UserReturn> {
-    const encryptedPassword = bcrypt.hash(params.password, 10);
+    const encryptedPassword = await bcrypt.hash(params.password, 10);
 
     const userParams = {
       ...params,
