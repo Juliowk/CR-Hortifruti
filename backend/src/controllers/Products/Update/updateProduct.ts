@@ -29,11 +29,11 @@ export class UpdateController implements IController {
         };
       }
 
-      const { name, price } = httpRequest.body;
+      const { name, price, image } = httpRequest.body;
 
       bodySchema.parse(httpRequest.body);
 
-      await this.repository.update(httpRequest.params.id, { name, price });
+      await this.repository.update(httpRequest.params.id, { name, price, image });
 
       return {
         statusCode: HttpStatusCode.OK,
@@ -53,7 +53,7 @@ export class UpdateController implements IController {
 
       return {
         statusCode: HttpStatusCode.SERVER_ERROR,
-        body: `Error: ${error}`,
+        body: `${error}`,
       };
     }
   }
