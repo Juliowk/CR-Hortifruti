@@ -14,7 +14,7 @@ export const MongoConnect = {
       const client = new MongoClient(url);
       await client.connect();
 
-      const db = client.db("products");
+      const db = client.db("cr-hortifruti");
 
       try {
         await db.command({ ping: 1 });
