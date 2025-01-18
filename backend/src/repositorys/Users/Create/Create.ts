@@ -3,10 +3,10 @@ import bcrypt from "bcrypt";
 import {
   ICreateUserRepository,
   IParamsCreateUser,
-  UserReturn,
-} from "../../../controllers/Users/create/protocol.js";
+} from "../../../controllers/Users/Create/protocol.js";
 import { MongoConnect } from "../../../database/Mongo.js";
 import User from "../../../models/User.js";
+import { UserReturn } from "../../../controllers/protocols.js";
 
 export class CreateUserRepository implements ICreateUserRepository {
   async createUser(params: IParamsCreateUser): Promise<UserReturn> {

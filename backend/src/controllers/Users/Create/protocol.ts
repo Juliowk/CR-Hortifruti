@@ -1,6 +1,4 @@
-import User from "../../../models/User.js";
-
-export type UserReturn = Omit<User, "password">;
+import { UserReturn } from "../../protocols.js";
 
 export interface IParamsCreateUser {
   name: string;

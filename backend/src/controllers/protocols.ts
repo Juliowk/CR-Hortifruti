@@ -1,4 +1,5 @@
 import { z } from "zod";
+import User from "../models/User.js";
 
 export enum HttpStatusCode {
   OK = 200,
@@ -49,3 +50,5 @@ export const bodySchemaUser = z.object({
     .min(8, "A senha deve ter no mínimo 8 caracteres!")
     .max(20, "A senha deve ter no máximo 20 caracteres!"),
 });
+
+export type UserReturn = Omit<User, "password">;
