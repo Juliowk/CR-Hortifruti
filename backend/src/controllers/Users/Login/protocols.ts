@@ -1,5 +1,7 @@
+import { ObjectId } from "mongodb";
+
 export type UserReturnLogin = {
-  id: string;
+  id: ObjectId;
   name: string;
   password: string;
 };
