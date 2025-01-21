@@ -5,12 +5,12 @@ import {
   HttpResponse,
   HttpStatusCode,
   IController,
+  UserReturn,
 } from "../../protocols.js";
 
 import {
   ICreateUserRepository,
   IParamsCreateUser,
-  UserReturn,
 } from "./protocol.js";
 
 export class CreateUserController implements IController {
