@@ -32,6 +32,7 @@
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/multer": "^1.4.12",
     "@types/typescript": "^0.4.29",
@@ -41,14 +42,15 @@
     "globals": "^15.14.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.19.0",
-    "@types/cors": "^2.8.17"
+    "typescript-eslint": "^8.19.0"
   },
   "dependencies": {
+    "@types/jsonwebtoken": "^9.0.7",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.12.0",
     "multer": "^1.4.5-lts.1",
     "zod": "^3.24.1"

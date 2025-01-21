@@ -28,6 +28,7 @@ export class CreateUserController implements IController {
       }
 
       bodySchemaUser.parse(httpRequest.body);
+      
       const userExist = await MongoConnect.db
         .collection("users")
         .findOne({ name: httpRequest.body.name });
