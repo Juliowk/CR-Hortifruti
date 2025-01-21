@@ -9,7 +9,7 @@ export const MongoConnect = {
 
   async connect(): Promise<void> {
     try {
-      const url = process.env.DB_URL_MONGO || "mongodb://localhost:27017/";
+      const url = process.env.DB_URL_MONGO || "";
       
       const client = new MongoClient(url);
       await client.connect();

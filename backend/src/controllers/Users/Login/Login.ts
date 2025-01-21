@@ -50,7 +50,7 @@ export class LoginController implements IController {
         };
       }
 
-      const secret = process.env.JWT_PASS ?? "tokendevlopment";
+      const secret = process.env.JWT_PASS ?? "";
 
       const token = jwt.sign({ id: user.id }, secret, { expiresIn: "1h" });
 
