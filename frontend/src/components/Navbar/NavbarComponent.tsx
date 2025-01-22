@@ -59,7 +59,6 @@ function Navbar_Component() {
             </Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-
             <Nav className={`justify-content-end flex-grow-1 pe-3`}>
               <Nav.Link href="#" className={isCollapse ? "mb-3 mt-3" : ""}>
                 <FaWhatsapp size={30} /> {isCollapse && "Whatsapp"}

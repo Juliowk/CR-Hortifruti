@@ -23,6 +23,7 @@ services:
     environment:
       - PORT=4000
       - DB_URL_MONGO=mongodb://db-mongo:27017/products/
+      - JWT_PASS=2b$10$pNTpj97J9/iJbM8M8skoTe4yLSmER771j
     depends_on:
       - database
 
