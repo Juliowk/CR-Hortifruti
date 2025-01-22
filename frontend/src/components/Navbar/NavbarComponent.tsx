@@ -1,6 +1,4 @@
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
@@ -10,7 +8,6 @@ import styles from "./navbar.module.css";
 import { useEffect, useState } from "react";
 import { FaGithub, FaWhatsapp } from "react-icons/fa";
 import { LuLogIn } from "react-icons/lu";
-import { MdOutlineSearch } from "react-icons/md";
 
 function Navbar_Component() {
   const [isCollapse, setIsCollapse] = useState(false);
@@ -34,7 +31,7 @@ function Navbar_Component() {
 
   return (
     <Navbar key={"sm"} expand={"sm"} className="bg-body-tertiary">
-      <Container>
+      <Container fluid className="px-lg-5">
         <Navbar.Brand href="#">
           <img
             alt="Logo image"
@@ -62,23 +59,6 @@ function Navbar_Component() {
             </Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            <Form
-              className={`d-flex ${isCollapse ? null : "w-100"}`}
-              style={{
-                marginLeft: !isCollapse ? "2rem" : undefined,
-                marginRight: !isCollapse ? "2rem" : undefined,
-              }}
-            >
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
-              <Button variant="outline-secondary">
-                <MdOutlineSearch size={30} />
-              </Button>
-            </Form>
 
             <Nav className={`justify-content-end flex-grow-1 pe-3`}>
               <Nav.Link href="#" className={isCollapse ? "mb-3 mt-3" : ""}>
