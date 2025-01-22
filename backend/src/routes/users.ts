@@ -5,19 +5,22 @@ import { CreateUserController } from "../controllers/Users/Create/createUser.js"
 
 import { GetUsersController } from "../controllers/Users/Get/getUsers.js";
 import { GetUsersRepository } from "../repositorys/Users/Get/Get.js";
+
 import { LoginRepository } from "../repositorys/Users/Login/Login.js";
 import { LoginController } from "../controllers/Users/Login/Login.js";
 
+import { AuthMiddleware } from "../middlewares/Auth.js";
+
 const routerUser = Router();
 
-routerUser.post("/", async (req, res) => {
+routerUser.post("/", AuthMiddleware, async (req, res) => {
   const repository = new CreateUserRepository();
   const controller = new CreateUserController(repository);
   const { statusCode, body } = await controller.handle(req);
   res.status(statusCode).json(body);
 });
 
-routerUser.get("/", async (req, res) => {
+routerUser.get("/", AuthMiddleware, async (req, res) => {
   const repository = new GetUsersRepository();
   const controller = new GetUsersController(repository);
   const { statusCode, body } = await controller.handle();

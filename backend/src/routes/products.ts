@@ -11,6 +11,7 @@ import { DeleteProductController } from "../controllers/Products/Delete/deletePr
 
 import { UpdateRepository } from "../repositorys/Products/Update/updateProduct.js";
 import { UpdateController } from "../controllers/Products/Update/updateProduct.js";
+import { AuthMiddleware } from "../middlewares/Auth.js";
 
 const routerProducts = Router();
 
@@ -21,21 +22,21 @@ routerProducts.get("/", async (req, res) => {
   res.status(statusCode).json(body);
 });
 
-routerProducts.post("/", async (req, res) => {
+routerProducts.post("/", AuthMiddleware, async (req, res) => {
   const repository = new CreateProductRepository();
   const controller = new CreateProductController(repository);
   const { statusCode, body } = await controller.handle(req);
   res.status(statusCode).json(body);
 });
 
-routerProducts.delete("/:id", async (req, res) => {
+routerProducts.delete("/:id", AuthMiddleware, async (req, res) => {
   const repository = new DeleteProductRepository();
   const controller = new DeleteProductController(repository);
   const { statusCode, body } = await controller.handle(req);
   res.status(statusCode).json(body);
 });
 
-routerProducts.patch("/:id", async (req, res) => {
+routerProducts.patch("/:id", AuthMiddleware, async (req, res) => {
   const repository = new UpdateRepository();
   const controller = new UpdateController(repository);
   const { statusCode, body } = await controller.handle(req);
