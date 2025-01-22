@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 
+import { createUserDefault } from "./helpers/UserDefault.js";
 import { MongoConnect } from "./database/Mongo.js";
 
 import routerProducts from "./routes/products.js";
@@ -20,6 +21,8 @@ const main = async () => {
 
   app.use("/products", routerProducts);
   app.use("/user", routerUser);
+
+  createUserDefault();
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
