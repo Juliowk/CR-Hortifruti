@@ -1,5 +1,6 @@
-import bcrypt from "bcrypt";
+import { ZodError } from "zod";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -18,7 +19,7 @@ export class LoginController implements IController {
   constructor(private readonly repository: ILoginRepository) {}
   async handle(
     httpRequest: HttpRequest<IParamsLoginUser>
-  ): Promise<HttpResponse<string>> {
+  ): Promise<HttpResponse<string | Record<string, string[]>>> {
     try {
       if (!httpRequest.body) {
         return {
@@ -26,6 +27,7 @@ export class LoginController implements IController {
           body: "Request body not provided.",
         };
       }
+
       bodySchemaUser.parse(httpRequest.body);
 
       const { name, password } = httpRequest.body;
@@ -59,6 +61,20 @@ export class LoginController implements IController {
         body: token,
       };
     } catch (error) {
+      if (error instanceof ZodError) {
+        const formattedErrors = error.errors.reduce((acc, err) => {
+          const field = err.path.join(".");
+          acc[field] = acc[field] || [];
+          acc[field].push(err.message);
+          return acc;
+        }, {} as Record<string, string[]>);
+
+        return {
+          statusCode: HttpStatusCode.BAD_REQUEST,
+          body: formattedErrors,
+        };
+      }
+
       return {
         statusCode: HttpStatusCode.SERVER_ERROR,
         body: `Server Error: ${error}`,

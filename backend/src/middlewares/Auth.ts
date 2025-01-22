@@ -32,18 +32,7 @@ export const AuthMiddleware = async (
     next();
   } catch (error) {
     if (error instanceof Error) {
-      if (error.message.split(" ")[0] === "Unauthorized") {
-        res.status(401).json(error.message);
-        return;
-      }
-
-      if (error.message === "invalid signature") {
-        res.status(401).json(error.message);
-        return;
-      }
-
-      console.log(error.message);
-      res.status(500).json("Server error");
+      res.status(401).json(error.message);
     }
   }
 };

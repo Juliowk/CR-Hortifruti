@@ -1,3 +1,4 @@
+import { ZodError } from "zod";
 import { MongoConnect } from "../../../database/Mongo.js";
 import {
   bodySchemaUser,
@@ -8,17 +9,14 @@ import {
   UserReturn,
 } from "../../protocols.js";
 
-import {
-  ICreateUserRepository,
-  IParamsCreateUser,
-} from "./protocol.js";
+import { ICreateUserRepository, IParamsCreateUser } from "./protocol.js";
 
 export class CreateUserController implements IController {
   constructor(private readonly repository: ICreateUserRepository) {}
 
   async handle(
     httpRequest: HttpRequest<IParamsCreateUser>
-  ): Promise<HttpResponse<UserReturn | string>> {
+  ): Promise<HttpResponse<UserReturn | string | Record<string, string[]>>> {
     try {
       if (!httpRequest.body) {
         return {
@@ -28,15 +26,16 @@ export class CreateUserController implements IController {
       }
 
       bodySchemaUser.parse(httpRequest.body);
-      
+
       const userExist = await MongoConnect.db
         .collection("users")
         .findOne({ name: httpRequest.body.name });
 
-      if (userExist) return {
-        statusCode: HttpStatusCode.BAD_REQUEST,
-        body: "Username already exists",
-      };
+      if (userExist)
+        return {
+          statusCode: HttpStatusCode.BAD_REQUEST,
+          body: "Username already exists",
+        };
 
       const user = await this.repository.createUser(httpRequest.body);
 
@@ -45,9 +44,23 @@ export class CreateUserController implements IController {
         body: user,
       };
     } catch (error) {
+      if (error instanceof ZodError) {
+        const formattedErrors = error.errors.reduce((acc, err) => {
+          const field = err.path.join(".");
+          acc[field] = acc[field] || [];
+          acc[field].push(err.message);
+          return acc;
+        }, {} as Record<string, string[]>);
+
+        return {
+          statusCode: HttpStatusCode.BAD_REQUEST,
+          body: formattedErrors,
+        };
+      }
+
       return {
         statusCode: HttpStatusCode.SERVER_ERROR,
-        body: `Unable to add user ${error}`,
+        body: `Server Error: ${error}`,
       };
     }
   }
