@@ -37,7 +37,7 @@ function Navbar_Component() {
   return (
     <Navbar key={"sm"} expand={"sm"} className="bg-body-tertiary">
       <Container fluid className="px-lg-5">
-        <Navbar.Brand href="#">
+        <Navbar.Brand href="/">
           <img
             alt="Logo image"
             src={logo}

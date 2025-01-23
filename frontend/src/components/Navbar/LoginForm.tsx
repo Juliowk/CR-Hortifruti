@@ -2,10 +2,6 @@ import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
 const LoginForm = () => {
-  const urlLogin = import.meta.env.VITE_URL_LOGIN_PROD;
-
-  if (!urlLogin) throw new Error("Unreported variables");
-
   const [data, setData] = useState({
     name: "",
     password: "",
@@ -24,6 +20,10 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
+      const urlLogin = import.meta.env.VITE_URL_LOGIN_PROD;
+
+      if (!urlLogin) throw new Error("Unreported variables");
+
       const response = await fetch(urlLogin, {
         method: "POST",
         headers: {
@@ -36,17 +36,38 @@ const LoginForm = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Erro ao fazer login");
+        
+        if (response.status === 400) {
+          const responseText = await response.text();
+          const errors: { [key: string]: string[] } = JSON.parse(responseText);
+
+          let errorMessage: string = "Por favor, corrija os seguintes erros:\n";
+
+          for (const [field, messages] of Object.entries(errors)) {
+            errorMessage += `${
+              field.charAt(0).toUpperCase() + field.slice(1)
+            }:\n`;
+            messages.forEach((message: string) => {
+              errorMessage += `- ${message}\n`;
+            });
+
+            throw new Error(errorMessage);
+          }
+        }
+
+        if (response.status === 401) {
+          throw new Error("Senha ou nome incorretos!");
+        }
       }
 
       const token = await response.text();
       const cleanedToken = token.replace(/^"|"$/g, "");
+
       localStorage.setItem("token", cleanedToken);
 
       window.location.reload();
     } catch (error) {
-      console.log(error);
-      alert("Erro ao fazer login: " + error);
+      alert(error);
     }
   };
 
