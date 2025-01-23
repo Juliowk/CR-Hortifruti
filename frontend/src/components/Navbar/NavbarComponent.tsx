@@ -74,14 +74,18 @@ function Navbar_Component() {
             </Modal>
 
             <Nav className={`justify-content-end flex-grow-1 pe-3`}>
-              <Nav.Link href="#" className={isCollapse ? "mb-3 mt-3" : ""}>
+              <Nav.Link href="" className={isCollapse ? "mb-3 mt-3" : ""}>
                 <FaWhatsapp size={30} /> {isCollapse && "Whatsapp"}
               </Nav.Link>
-              <Nav.Link href="#" className={isCollapse ? "mb-3" : ""}>
+              <Nav.Link
+                target="_blank"
+                href="https://github.com/Juliowk"
+                className={isCollapse ? "mb-3" : ""}
+              >
                 <FaGithub size={29} /> {isCollapse && "GitHub"}
               </Nav.Link>
               <Nav.Link
-                href="#"
+                href=""
                 className={isCollapse ? "mb-3" : ""}
                 onClick={handleClick}
               >
