@@ -8,8 +8,13 @@ import styles from "./navbar.module.css";
 import { useEffect, useState } from "react";
 import { FaGithub, FaWhatsapp } from "react-icons/fa";
 import { LuLogIn } from "react-icons/lu";
+import { Modal } from "react-bootstrap";
+import LoginForm from "./LoginForm";
 
 function Navbar_Component() {
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
+
   const [isCollapse, setIsCollapse] = useState(false);
 
   const handleResize = () => {
@@ -59,6 +64,15 @@ function Navbar_Component() {
             </Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
+            <Modal show={show} onHide={handleClick} centered size="lg">
+              <Modal.Header closeButton>
+                <Modal.Title>Formulario de Login</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <LoginForm />
+              </Modal.Body>
+            </Modal>
+
             <Nav className={`justify-content-end flex-grow-1 pe-3`}>
               <Nav.Link href="#" className={isCollapse ? "mb-3 mt-3" : ""}>
                 <FaWhatsapp size={30} /> {isCollapse && "Whatsapp"}
@@ -66,7 +80,11 @@ function Navbar_Component() {
               <Nav.Link href="#" className={isCollapse ? "mb-3" : ""}>
                 <FaGithub size={29} /> {isCollapse && "GitHub"}
               </Nav.Link>
-              <Nav.Link href="#" className={isCollapse ? "mb-3" : ""}>
+              <Nav.Link
+                href="#"
+                className={isCollapse ? "mb-3" : ""}
+                onClick={handleClick}
+              >
                 <LuLogIn size={29} /> {isCollapse && "Login"}
               </Nav.Link>
             </Nav>
