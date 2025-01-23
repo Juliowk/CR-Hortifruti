@@ -40,7 +40,8 @@ const LoginForm = () => {
       }
 
       const token = await response.text();
-      localStorage.setItem("token", token);
+      const cleanedToken = token.replace(/^"|"$/g, "");
+      localStorage.setItem("token", cleanedToken);
 
       window.location.reload();
     } catch (error) {

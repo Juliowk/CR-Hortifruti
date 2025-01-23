@@ -27,10 +27,17 @@ const ModalBodyForm = () => {
     e.preventDefault();
 
     try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        throw new Error("Token não informado");
+      }
+      
       const responseProducts = await fetch(urlProducts, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({
           name: data.name,
@@ -39,12 +46,12 @@ const ModalBodyForm = () => {
         }),
       });
 
-      if (!responseProducts.ok) throw new Error("Erro ao salvar o produto");
+      if (!responseProducts.ok) throw new Error(responseProducts.statusText);
 
       window.location.reload();
     } catch (error) {
       console.log(error);
-      alert("Erro ao salvar o produto");
+      alert(error);
     }
   };
 
