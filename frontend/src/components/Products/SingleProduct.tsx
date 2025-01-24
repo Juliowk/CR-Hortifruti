@@ -1,5 +1,6 @@
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { SingleProductProps } from "./protocols";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 
 const SingleProduct = ({ product, userExpiredStatus }: SingleProductProps) => {
   return (
@@ -23,7 +24,7 @@ const SingleProduct = ({ product, userExpiredStatus }: SingleProductProps) => {
                   variant="danger"
                   className="w-100"
                 >
-                  Delete
+                  <RiDeleteBin6Fill size={30} />
                 </Button>
               </Col>
             </Row>
