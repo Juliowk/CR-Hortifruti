@@ -12,7 +12,7 @@ function App() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch(import.meta.env.VITE_URL_GET_PRODUCTS_PROD)
+    fetch(import.meta.env.VITE_URL_PRODUCTS_PROD)
       .then((result) => {
         if (!result.ok) throw new Error("Request error");
         return result.json();

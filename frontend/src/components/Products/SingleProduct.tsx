@@ -3,6 +3,33 @@ import { SingleProductProps } from "./protocols";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 
 const SingleProduct = ({ product, userExpiredStatus }: SingleProductProps) => {
+  const urlDelete = `${import.meta.env.VITE_URL_PRODUCTS_PROD}/${product._id}`;
+
+  const handleSubmit = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        throw new Error("Token não informado");
+      }
+      
+      const responseProducts = await fetch(urlDelete, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!responseProducts.ok) throw new Error(responseProducts.statusText);
+
+      window.location.reload();
+    } catch (error) {
+      alert("Erro ao deletar o produto");
+      console.error("Erro ao deletar o produto:", error);
+    }
+  };
+
   return (
     <Col>
       <Card>
@@ -23,6 +50,7 @@ const SingleProduct = ({ product, userExpiredStatus }: SingleProductProps) => {
                   style={{ cursor: "default" }}
                   variant="danger"
                   className="w-100"
+                  onClick={handleSubmit}
                 >
                   <RiDeleteBin6Fill size={30} />
                 </Button>
