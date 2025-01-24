@@ -32,7 +32,7 @@ function App() {
 
   return (
     <>
-      <Navbar_Component />
+      <Navbar_Component userExpiredStatus={verifyExpiredToken()}/>
       <Carousel_Component />
       <Products_Grid_Component
         products={[...products].reverse()}

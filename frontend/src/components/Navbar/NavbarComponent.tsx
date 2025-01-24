@@ -10,8 +10,13 @@ import { FaGithub, FaWhatsapp } from "react-icons/fa";
 import { LuLogIn } from "react-icons/lu";
 import { Modal } from "react-bootstrap";
 import LoginForm from "./LoginForm";
+import { CgLogOut } from "react-icons/cg";
 
-function Navbar_Component() {
+interface INavbarProps {
+  userExpiredStatus: boolean;
+}
+
+function Navbar_Component({ userExpiredStatus }: INavbarProps) {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
@@ -33,6 +38,12 @@ function Navbar_Component() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const logoutClick = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("tokenExpiration");
+    window.location.reload(); 
+  };
 
   return (
     <Navbar key={"sm"} expand={"sm"} className="bg-body-tertiary">
@@ -84,13 +95,23 @@ function Navbar_Component() {
               >
                 <FaGithub size={29} /> {isCollapse && "GitHub"}
               </Nav.Link>
-              <Nav.Link
-                href=""
-                className={isCollapse ? "mb-3" : ""}
-                onClick={handleClick}
-              >
-                <LuLogIn size={29} /> {isCollapse && "Login"}
-              </Nav.Link>
+              {userExpiredStatus ? (
+                <Nav.Link
+                  href=""
+                  className={isCollapse ? "mb-3" : ""}
+                  onClick={handleClick}
+                >
+                  <LuLogIn size={29} /> {isCollapse && "Login"}
+                </Nav.Link>
+              ) : (
+                <Nav.Link
+                  href=""
+                  className={isCollapse ? "mb-3" : ""}
+                  onClick={logoutClick}
+                >
+                  <CgLogOut size={32} /> {isCollapse && "Logout"}
+                </Nav.Link>
+              )}
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
