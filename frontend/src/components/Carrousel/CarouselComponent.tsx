@@ -1,26 +1,16 @@
 import Carousel from "react-bootstrap/Carousel";
-import ExampleCarouselImage from "../ExampleCarouselImage";
 
 function Carousel_Component() {
   return (
     <Carousel>
       <Carousel.Item>
-        <ExampleCarouselImage text="Primeiro slide" />
+        <img className="d-block w-100" src={`/banners/1.jpg`} />
       </Carousel.Item>
       <Carousel.Item>
-        <ExampleCarouselImage text="Segundo slide" />
+        <img className="d-block w-100" src={`/banners/2.jpg`} />
       </Carousel.Item>
       <Carousel.Item>
-        <ExampleCarouselImage text="Terceiro slide" />
-      </Carousel.Item>
-      <Carousel.Item>
-        <ExampleCarouselImage text="Quarto slide" />
-      </Carousel.Item>
-      <Carousel.Item>
-        <ExampleCarouselImage text="Quinto slide" />
-      </Carousel.Item>
-      <Carousel.Item>
-        <ExampleCarouselImage text="Sexto slide" />
+        <img className="d-block w-100" src={`/banners/3.jpg`} />
       </Carousel.Item>
     </Carousel>
   );

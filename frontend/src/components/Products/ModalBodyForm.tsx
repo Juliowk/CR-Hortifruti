@@ -2,9 +2,7 @@ import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
 const ModalBodyForm = () => {
-  const urlProducts =
-    import.meta.env.VITE_URL_GET_PRODUCTS_DEV ||
-    import.meta.env.VITE_URL_GET_PRODUCTS_PROD;
+  const urlProducts = import.meta.env.VITE_URL_PRODUCTS_PROD;
 
   if (!urlProducts) throw new Error("Unreported variables");
 
@@ -32,12 +30,12 @@ const ModalBodyForm = () => {
       if (!token) {
         throw new Error("Token não informado");
       }
-      
+
       const responseProducts = await fetch(urlProducts, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           name: data.name,
