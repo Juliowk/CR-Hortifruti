@@ -1,14 +1,11 @@
-import { Button, Card, Col } from "react-bootstrap";
+import { Button, Card, Col, Row } from "react-bootstrap";
 import { SingleProductProps } from "./protocols";
 
-const SingleProduct = ({ product }: SingleProductProps) => {
+const SingleProduct = ({ product, userExpiredStatus }: SingleProductProps) => {
   return (
     <Col>
       <Card>
-        <Card.Img
-          variant="top"
-          src={`/cards/${product.image}`}
-        />
+        <Card.Img variant="top" src={`/cards/${product.image}`} />
         <Card.Body>
           <Card.Title>{product.name}</Card.Title>
           <Button
@@ -18,6 +15,19 @@ const SingleProduct = ({ product }: SingleProductProps) => {
           >
             Preço da semana: ${product.price}
           </Button>
+          {!userExpiredStatus && (
+            <Row className="mt-3">
+              <Col>
+                <Button
+                  style={{ cursor: "default" }}
+                  variant="danger"
+                  className="w-100"
+                >
+                  Delete
+                </Button>
+              </Col>
+            </Row>
+          )}
         </Card.Body>
       </Card>
     </Col>

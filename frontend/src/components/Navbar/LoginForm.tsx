@@ -62,8 +62,10 @@ const LoginForm = () => {
 
       const token = await response.text();
       const cleanedToken = token.replace(/^"|"$/g, "");
+       const expirationTime = Date.now() + 3600000;
 
       localStorage.setItem("token", cleanedToken);
+      localStorage.setItem("tokenExpiration", expirationTime.toString());
 
       window.location.reload();
     } catch (error) {

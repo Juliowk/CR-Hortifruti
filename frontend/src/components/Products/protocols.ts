@@ -11,4 +11,9 @@ export interface IArrayProducts {
 
 export interface SingleProductProps {
   product: IProducts;
+  userExpiredStatus: boolean;
+}
+
+export interface IProductsGridProps extends IArrayProducts {
+  userExpiredStatus: boolean;
 }
