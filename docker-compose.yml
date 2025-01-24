@@ -24,6 +24,8 @@ services:
       - PORT=4000
       - DB_URL_MONGO=mongodb://db-mongo:27017/products/
       - JWT_PASS=2b$10$pNTpj97J9/iJbM8M8skoTe4yLSmER771j
+      - NAME_USER_DEFAULT=root
+      - PASSWORD_USER_DEFAULT=123abc456
     depends_on:
       - database
 
@@ -33,7 +35,8 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        - VITE_URL_GET_PRODUCTS_PROD
+        - VITE_URL_PRODUCTS_PROD
+        - VITE_URL_LOGIN_PROD
     ports:
       - "3000:3000"
     volumes:
