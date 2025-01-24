@@ -37,6 +37,8 @@ services:
       args:
         - VITE_URL_PRODUCTS_PROD
         - VITE_URL_LOGIN_PROD
+        - VITE_URL_NUMBER_PHONE=
+        - VITE_URL_MESSAGE_PHONE=
     ports:
       - "3000:3000"
     volumes:

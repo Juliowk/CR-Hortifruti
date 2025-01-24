@@ -42,7 +42,7 @@ function Navbar_Component({ userExpiredStatus }: INavbarProps) {
   const logoutClick = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("tokenExpiration");
-    window.location.reload(); 
+    window.location.reload();
   };
 
   return (
@@ -85,7 +85,13 @@ function Navbar_Component({ userExpiredStatus }: INavbarProps) {
             </Modal>
 
             <Nav className={`justify-content-end flex-grow-1 pe-3`}>
-              <Nav.Link href="" className={isCollapse ? "mb-3 mt-3" : ""}>
+              <Nav.Link
+                target="_blank"
+                href={`https://wa.me/55${
+                  import.meta.env.VITE_URL_NUMBER_PHONE
+                }?text=${import.meta.env.VITE_URL_MESSAGE_PHONE}`}
+                className={isCollapse ? "mb-3 mt-3" : ""}
+              >
                 <FaWhatsapp size={30} /> {isCollapse && "Whatsapp"}
               </Nav.Link>
               <Nav.Link
