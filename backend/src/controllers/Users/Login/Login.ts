@@ -36,7 +36,7 @@ export class LoginController implements IController {
 
       if (!userExist) {
         return {
-          statusCode: HttpStatusCode.BAD_REQUEST,
+          statusCode: HttpStatusCode.UNAUTHORIZED,
           body: `Incorrect name or password.`,
         };
       }
@@ -47,7 +47,7 @@ export class LoginController implements IController {
 
       if (!verifyPassword) {
         return {
-          statusCode: HttpStatusCode.BAD_REQUEST,
+          statusCode: HttpStatusCode.UNAUTHORIZED,
           body: `Incorrect name or password.`,
         };
       }
