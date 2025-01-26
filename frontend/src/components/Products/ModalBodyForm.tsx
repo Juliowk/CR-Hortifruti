@@ -83,8 +83,14 @@ const ModalBodyForm = () => {
           <Form.Label htmlFor="imagemSelect">Imagem:</Form.Label>
           <Form.Select id="image" value={data.image} onChange={handleChange}>
             <option value="">Selecione uma imagem</option>
-            <option value="Batata-card.png">Batata</option>
-            <option value="Cenoura-card.png">Cenoura</option>
+            <option value="batata-card.png">Batata</option>
+            <option value="cenoura-card.png">Cenoura</option>
+            <option value="cebola-card.jpg">Cebola</option>
+            <option value="jerimun-card.jpg">Jerimun</option>
+            <option value="kiwi-card.jpg">Kiwi</option>
+            <option value="maça-card.jpg">Maça</option>
+            <option value="tangerina-card.jpg">Tangerina</option>
+            <option value="uva-card.jpg">Uva</option>
           </Form.Select>
         </Col>
       </Row>
